@@ -33,24 +33,6 @@
     - markdown==2.6.2
 
 
-#- name: Clone a repo with separate git directory
-#  ansible.builtin.git:
-#    repo: https://github.com/TorresAWS/djangohelloyou 
-#    dest: /src/djangohelloyou
-#    separate_git_dir: /src/djangohelloyou.git
-#
-#- name: Template a file to /etc/file.conf
-#  ansible.builtin.template:
-#    src: ./templates/test.service.j2
-#    dest: /etc/systemd/system/test.service 
-#
-#- name: Make sure a service is running
-#  systemd:
-#    state: started
-#    name: test.service 
-#
-
-
 - name: Create a vagrant user acting as the user vagrant (sudo su - postgres) 
   become_user: postgres 
   shell: "createuser vagrant -s"
@@ -61,3 +43,22 @@
   community.postgresql.postgresql_db:
     name: scrum 
     encoding: UTF-8
+
+- name: Clone a repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/TorresAWS/djangorest 
+    dest: /src/djangorest
+    separate_git_dir: /src/djangorest.git
+
+- name: Template a file to /etc/file.conf
+  ansible.builtin.template:
+    src: ./templates/test.service.j2
+    dest: /etc/systemd/system/test.service 
+
+- name: Make sure a service is running
+  systemd:
+    state: started
+    name: test.service 
+
+
+
