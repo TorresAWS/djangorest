@@ -1,7 +1,7 @@
 ---
  
 - name: Install Gunicorn 
-  hosts: gserver
+  hosts: vagrantserver
   become: yes
   roles:
     - gunicorn 
