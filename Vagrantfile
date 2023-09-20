@@ -2,9 +2,9 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
 
-  config.vm.define :gserver do |vagrant|
+  config.vm.define :vagrantserver do |vagrant|
     vagrant.vm.box = "ubuntu/trusty64"
-    vagrant.vm.hostname = "gserver"
+    vagrant.vm.hostname = "vagrantserver"
     vagrant.vm.network "forwarded_port", host: 8000, guest: 8000
 #    vagrant.vm.network "private_network", ip: "192.168.99.30"
   end
