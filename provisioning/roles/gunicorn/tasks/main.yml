@@ -1,7 +1,6 @@
 ---
-###INSTALL ANY PYTHON VERSION
 
-- name: Install required package s
+- name: Install required packages with apt
   apt: name={{item}} state=present
   with_items:
     - git 
@@ -13,21 +12,12 @@
     - python-psycopg2
     - python3-pexpect 
     - expect 
-#    - wget 
-#    - python-virtualenv 
 
-
-- shell: "python3 --version"
-  register: python_installed
-- name: print a registered variable
-  debug: var=python_installed.stderr_lines
-
-- name: Install django, postgresql packages
+- name: Install required packages with pip3
   ansible.builtin.pip:
     name: "{{item}}" 
     executable: pip3
   with_items:
-#    - django==2.0
     - django==1.8.3
     - django-compressor
     - psycopg2==2.6.1 
@@ -36,7 +26,7 @@
     - markdown==2.6.2
 
 
-- name: Create a vagrant user acting as the user vagrant (sudo su - postgres) 
+- name: Create a vagrant user acting as the user postgres (sudo su - postgres) 
   become_user: postgres 
   shell: "createuser vagrant -s"
   failed_when: false
@@ -105,28 +95,31 @@
   no_log: False 
   become: false 
   shell: |
-    set timeout 300
+    set timeout 10 
     log_user 0
-    spawn /usr/bin/python3 manage.py  changepassword  "{{ admin_user }}" 
-    expect "Password for * "
-    send "{{ admin_pass }}\n"
-    expect "Password for * "
-    send "{{ admin_pass }}\n"
+    set  admin_user "{{ admin_user }}" 
+    spawn /usr/bin/python3 manage.py  changepassword  {{ admin_user }} 
+    expect "Password: " 
+    send {{ admin_pass }}\r
+    expect "Password (again): " 
+    send {{ admin_pass }}\r
+    interact
     exit 0
   args:
     executable: /usr/bin/expect
+    chdir: "{{django_dir}}"
 
 
 
 - name: Template a file to /etc/file.conf
   ansible.builtin.template:
-    src: ./templates/test.service.j2
-    dest: /etc/systemd/system/test.service 
+    src: ./templates/djangoserver.service.j2
+    dest: /etc/systemd/system/djangoserver.service 
 
-- name: Make sure a service is running
+- name: startservice
   systemd:
     state: started
-    name: test.service 
+    name: djangoserver.service 
 
 
 

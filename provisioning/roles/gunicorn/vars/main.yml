@@ -6,17 +6,6 @@ admin_user: vagrant
 admin_email: admin@example.com
 admin_pass: kk123 
 app_path: /src/djangorest/scrum 
-
-
-
-
-
-
-
-
-admin_email: dtorresrangel@gmail.com
-admin_user: vagrant 
-django_superuser_username: vagrant
 gunicorn:
   mysql_superuser_home: /root
   user: root
