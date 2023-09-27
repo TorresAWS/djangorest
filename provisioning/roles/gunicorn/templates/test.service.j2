@@ -2,8 +2,9 @@
 Description=My test service
 After=multi-user.target
 [Service]
+User=vagrant
 Type=simple
 Restart=always
-ExecStart=/usr/bin/python3 /src/djangorest/scrum/scrum/settings.py runserver 0.0.0.0:8000  
+ExecStart=/usr/bin/python3 /src/djangorest/scrum/manage.py runserver 0.0.0.0:8000  
 [Install]
 WantedBy=multi-user.target

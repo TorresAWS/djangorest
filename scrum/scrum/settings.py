@@ -1,3 +1,13 @@
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SECRET_KEY = 'w6**ci+meh=n)o_2ee5qga7ubb&pb30=iyx^5$+v-_iv+u)!nw'
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
