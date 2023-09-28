@@ -1,0 +1,5 @@
+- name: Template a file to /etc/file.conf
+  ansible.builtin.template:
+    src: ./templates/djangoserver.service.j2
+    dest: /etc/systemd/system/djangoserver.service
+  notify: start django service

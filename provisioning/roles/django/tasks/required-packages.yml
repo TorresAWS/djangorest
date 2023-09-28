@@ -1,0 +1,11 @@
+- name: Install required packages with apt
+  apt: name={{item}} state=present
+  with_items:
+    - "{{ Django_app_packages }}"
+
+- name: Install required packages with pip3
+  ansible.builtin.pip:
+    name: "{{item}}"
+    executable: pip3
+  with_items:
+    - "{{ Django_pip_packages }}"

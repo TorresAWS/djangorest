@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Daniel Torres 
+  description: Deploy a Django app.
+  license: MIT
+
+  min_ansible_version: 0.1
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - trusty64 
+
+  galaxy_tags:
+    - django
+
+#dependencies:
+#  - cdriehuys.virtualenv

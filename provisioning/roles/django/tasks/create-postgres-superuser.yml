@@ -1,0 +1,42 @@
+- name: Check if super user existed in Django DB
+  become: false
+  shell: echo "from django.contrib.auth import get_user_model; User = get_user_model(); print(User.objects.filter(username='{{Django_admin_user}}').count()>0)" | python3 ./manage.py shell
+  args:
+    chdir: "{{Django_django_dir}}"
+  register: superuser_existed
+
+- name: save superuser_existed.stdout_line as boolean trim
+  set_fact:
+    superuser_existed={{superuser_existed.stdout_lines[0].split('>>>')[1:]    }}
+
+- name: save superuser_existed.stdout_line as boolean
+  set_fact:
+    superuser_existed={{ superuser_existed[0] | trim | bool }}
+
+- name: replaces python for python3 in manage.py
+  shell: sed -i 's/python/python3/' /src/djangorest/scrum/manage.py
+
+- name: Create Django super user if it doesnt exist
+  become: false
+  django_manage: command="createsuperuser --noinput --username={{Django_admin_user}} --email={{Django_admin_email}}"
+                 app_path={{Django_django_dir}}
+  when:  not superuser_existed
+
+- name: Change Django superuser password
+  no_log: False
+  become: false
+  shell: |
+    set timeout 5
+    log_user 0
+    set  admin_user "{{ Django_admin_user }}"
+    spawn /usr/bin/python3 manage.py  changepassword  {{ Django_admin_user }}
+    expect "Password: "
+    send {{ Django_admin_pass }}\r
+    expect "Password (again): "
+    send {{ Django_admin_pass }}\r
+    interact
+    exit 0
+  args:
+    chdir: "{{Django_django_dir}}"
+    executable: /usr/bin/expect
+  when:  superuser_existed

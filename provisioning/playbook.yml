@@ -1,7 +1,7 @@
 ---
  
-- name: Install Gunicorn 
+- name: Install Django with PostgreSQL 
   hosts: vagrantserver
   become: yes
   roles:
-    - gunicorn 
+    - django 

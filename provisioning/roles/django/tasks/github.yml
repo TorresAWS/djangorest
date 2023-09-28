@@ -1,0 +1,9 @@
+- name: Clone a repo with separate git directory
+  ansible.builtin.git:
+    repo: "{{ Github_repo }}"
+    dest: "{{ Django_django_src_dir }}"
+    single_branch: "{{ Github_single_branch }}"
+    version: "{{ Github_branch_name }}"
+    force: yes
+
+
