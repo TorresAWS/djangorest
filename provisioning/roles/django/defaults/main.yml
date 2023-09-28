@@ -1,0 +1,38 @@
+---
+settings: djangoapp.settings
+Project_name: scrum 
+App_name: board 
+
+Django_admin_user: vagrant 
+Django_admin_email: admin@example.com
+Django_admin_pass: kk123 
+Django_django_src_dir: /src/djangorest
+Django_django_dir: /src/djangorest/scrum 
+Django_db_name: Project_name 
+Django_postgres_user_name: postgres 
+Django_postgres_Encoding_name: UTF-8 
+
+Django_app_packages:
+    - git
+    - python3-pip
+    - systemd
+    - postgresql-server-dev-all
+    - postgresql-client
+    - postgresql
+    - python-psycopg2
+    - python3-pexpect
+    - expect
+Django_pip_packages:
+    - django==1.8.3
+    - django-compressor
+    - psycopg2==2.6.1
+    - djangorestframework==3.1.3
+    - django-filter==0.10.0
+    - markdown==2.6.2
+
+Github_repo: "https://github.com/lightweightdjango/examples.git"
+#Github_repo: "https://github.com/TorresAWS/djangorest"
+Github_single_branch: "yes"
+Github_branch_name: chapter-4 
+
+

@@ -1,0 +1,9 @@
+---
+- include: required-packages.yml
+- include: github.yml
+- include: gather-local-users.yml
+- include: create-postgres.yml
+- include: db-migrations.yml
+- include: create-postgres-superuser.yml
+- include: create-service.yml
+

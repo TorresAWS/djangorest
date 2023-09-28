@@ -1,0 +1,11 @@
+- name: Create a vagrant user acting as the user postgres (sudo su - postgres)
+  become_user: "{{ Django_postgres_user_name }}"
+  shell: "createuser {{ Django_admin_user }} -s"
+  failed_when: false
+  when: Django_postgres_user_name in getent_passwd.keys()
+
+- name: Create a new database wth specific encoding
+  become_user: "{{ Django_postgres_user_name }}"
+  community.postgresql.postgresql_db:
+    name: "{{ Django_db_name }}"
+    encoding: "{{ Django_postgres_Encoding_name }}"

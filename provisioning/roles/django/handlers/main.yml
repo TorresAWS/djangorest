@@ -1,0 +1,25 @@
+---
+ 
+- name: start django service
+  systemd:
+    state: started
+    name: djangoserver.service
+    enabled: yes
+
+- name: reload django service
+  systemd:
+    daemon_reload: yes
+    name: djangoserver.service
+    enabled: yes
+
+- name: stop django service
+  systemd:
+    state: stopped
+    name: djangoserver.service
+    enabled: yes
+
+- name: delete Django DB user 
+  become: false
+  shell: echo "from django.contrib.auth.models import User ; User.objects.get(username='{{ Django_admin_user }}', is_superuser=True).delete()" | python3 manage.py shell 
+  args:
+    chdir: "{{Django_django_dir}}"

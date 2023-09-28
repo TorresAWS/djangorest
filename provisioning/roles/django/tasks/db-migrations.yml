@@ -1,0 +1,11 @@
+- name: create database migration files based on changes on models
+  become: false
+  shell: python3 manage.py  makemigrations  {{ App_name }}
+  args:
+    chdir: "{{Django_django_dir}}"
+
+- name: apply migrations
+  become: false
+  shell: python3 manage.py  migrate
+  args:
+    chdir: "{{Django_django_dir}}"
